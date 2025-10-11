@@ -18,6 +18,12 @@
     @apply hidden
 }
 
+.border {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e5e7eb;
+}
+
 
 
 
