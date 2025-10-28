@@ -9,3 +9,13 @@
 * {
     font-family: Outfit, serif;
 }
+
+::-webkit-scrollbar{
+    @apply hidden
+}
+
+
+/*
+.border{
+    @apply border-gray-300;
+}*/
