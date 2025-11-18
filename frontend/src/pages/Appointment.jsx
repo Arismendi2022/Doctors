@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { data, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext.jsx";
 import { assets } from "../assets/assets.js";
 import RelatedDoctors from "../components/RelatedDoctors.jsx";
@@ -25,6 +25,15 @@ const Appointment = () => {
 		setDocInfo(docInfo);
 	}
 
+	// ← Añade esta función dentro del componente
+	const formatTimeTo12Hour = (time24) => {
+		const [hour, minute] = time24.split(':');
+		const h = parseInt(hour);
+		const period = h >= 12 ? 'PM' : 'AM';
+		const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+		return `${hour12}:${minute} ${period}`;
+	};
+
 	const getAvailableSlots = async () => {
 		if (!docInfo || !docInfo.slots_booked) {
 			return;
@@ -47,10 +56,10 @@ const Appointment = () => {
 
 			// Setting hours
 			if (today.getDate() === currentDate.getDate()) {
-				currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10)
+				currentDate.setHours(currentDate.getHours() > 8 ? currentDate.getHours() + 1 : 8)
 				currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)
 			} else {
-				currentDate.setHours(10)
+				currentDate.setHours(8)
 				currentDate.setMinutes(0)
 			}
 
@@ -69,7 +78,7 @@ const Appointment = () => {
 				const isSlotAvailable = docInfo.slots_booked[slotDate] && docInfo.slots_booked[slotDate].includes(slotTime) ? false : true;
 
 				if (isSlotAvailable) {
-				// Add slot to array
+					// Add slot to array
 					timeSlots.push({
 						datetime: new Date(currentDate),
 						time: formattedTime,
