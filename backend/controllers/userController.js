@@ -139,6 +139,10 @@ const bookAppointment = async (req, res) => {
 		const userId = req.user.userId;  // ← Obtener del middleware de autenticación
 		const {docId, slotDate, slotTime} = req.body;  // ← Remover userId de aquí
 
+		if (!docId || !slotDate || !slotTime) {
+			return res.json({success: false, message: "Missing required fields"});
+		}
+
 		const docData = await doctorModel.findById(docId).select('-password')
 
 		if (!docData.available) {
