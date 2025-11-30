@@ -10,7 +10,7 @@ const authDoctor = async (req, res, next) => {
 		}
 
 		const token_decode = jwt.verify(dtoken, process.env.JWT_SECRET)
-		req.doctor =  { docId: token_decode.id}
+		req.doctor =  { docId: token_decode.id} // ← Crea el objeto req.doctor
 
 		next()
 
